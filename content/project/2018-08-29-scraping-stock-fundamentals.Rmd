@@ -1,0 +1,141 @@
+---
+title: Scraping stock fundamentals
+author: Christopher Furu
+date: '2018-08-29'
+slug: scraping-stock-fundamentals
+categories: []
+tags:
+  - Investment portfolio
+  - Python
+  - R
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+library(knitr)
+library(kableExtra)
+```
+## Importing tickers from an excelfile
+Lets start by importing tickers/symbols from a regular xlsx excel file, where I have stored the symbols/tickers in a column named "Ticker". The talked-about excelsheet looks like this
+
+![*Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix $10^(12)$*](../../images/excel_sheet_1.png)
+
+ Now lets write some simple python code to assimilate the necessary information in the excel sheet. 
+The methodology will be to loop through the column "Ticker" and store each ticker in a pandas dataframe. A example of doing this follows
+
+```{python, python.reticulate = TRUE}
+import xlrd
+import pandas as pd
+excel_dir = "../../static/excelfiles/tickers.xlsx"
+wb = xlrd.open_workbook(excel_dir)
+sh = wb.sheet_by_name('Data')
+
+Records = []
+for i in range (1, sh.nrows):
+    Records.append(sh.cell_value(i,0))
+headers = ['Ticker']
+Tickers = pd.DataFrame(Records, columns = headers)
+```
+
+and the result of this code looks like this
+
+```{r, echo = FALSE, results = "show"}
+py$Tickers %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+## Master dataframe
+
+Now we create an empty pandas dataframe that will define the structure to hold financial data for each ticker.
+This procedure can easily be done by adding new columns to the allready existing pandas dataframe, containing the tickers. The python code for doing this follows
+
+```{python, python.reticulate = TRUE}
+Tickers = Tickers.reindex(columns = ['Date', 'Ticker', 'Link'])
+items = ['Enterprise Value', 'Enterprise Value/Revenue', 'Diluted EPS',
+         'Enterprise Value/EBITDA', 'Revenue', 'EBITDA', 'Trailing P/E', 
+         'Total Cash', 'Total Debt']
+Tickers = Tickers.reindex(columns=[*Tickers.columns.tolist(), *items], fill_value=0.0)
+Tickers = Tickers.fillna(0.0)
+```
+
+and the output looks like this
+
+```{r, echo = FALSE, results = "show"}
+py$Tickers %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(width = "800px", height = "200px")
+```
+
+
+## Scraping function
+Now we define the function that will scrape the financials from Yahoo-finance. The function will take input in the form of a pandas dataframe that must include a column p? name "Ticker" that holds all the tickers. Furhter the function will fill in the predefined dataframe with financial data and return the dataframe.
+
+```{python, python.reticulate = TRUE}
+from bs4 import BeautifulSoup    # beautiful soup handles the html to text conversion and more
+from urllib.request import urlopen
+
+def load_stock_financials(data):    
+    items = ['Fiscal Year Ends', 'Enterprise Value', 'Enterprise Value/Revenue', 'Diluted EPS',
+             'Enterprise Value/EBITDA', 'Revenue', 'EBITDA', 'Trailing P/E', 
+             'Total Cash', 'Total Debt']
+    #The web-scraping part
+    for i, ticker in enumerate(data['Ticker']):
+        rowIndex = data.index[i]
+        key_stats_link = 'https://finance.yahoo.com/quote/' + ticker + '/key-statistics?p=' + ticker
+        key_stats_soup = BeautifulSoup(urlopen(key_stats_link).read(), 'html.parser').findAll('td')
+        
+        data.loc[i, 'Link'] = key_stats_link #Adding the link to the dataframe
+      
+        #Looping through html td-tagg data
+        for j, row in enumerate(key_stats_soup):
+            #Searching for the "items" or topics defined in the items list
+            for item in items:
+                try:
+                    # Dangerous assumption
+                    if item == row.span.string:
+                        if item == 'Fiscal Year Ends':
+                            data.loc[rowIndex, 'Date'] = key_stats_soup[j+1].string
+                        else:
+                            data.loc[rowIndex, item] = unit_converter(key_stats_soup[j+1].string)
+                #If not found, continue to next
+                except:
+                    next
+    return data
+```
+
+now we need to write some code to handle the, not so convenient, way of using prefixes namely using characters instead of numbers. 
+
+![*Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix $10^12$*](../../images/yahoo_table_1.png)
+
+
+For further details see Figure 1 for a detailed example from Yahoo-finance.
+
+```{python, python.reticulate = TRUE}
+def unit_converter(data):
+    trillion = 1e12
+    billion = 1e9
+    million = 1e6
+    if data[-1] == 'T':
+        return float(data[:-1])*trillion
+    elif data[-1] == 'B':
+        return float(data[:-1])*billion
+    elif data[-1] == 'M':
+        return float(data[:-1])*million
+    else:
+        return float(data)
+```
+
+Now lets scrape Yahoo and print the result on the desired form.
+
+```{python, include = FALSE, python.reticulate = TRUE}
+df = load_stock_financials(Tickers)
+```
+```{r, echo = FALSE, results = "show"}
+py$df %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(width = "800px", height = "200px")
+```

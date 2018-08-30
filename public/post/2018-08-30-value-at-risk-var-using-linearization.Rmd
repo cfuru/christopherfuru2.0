@@ -1,0 +1,112 @@
+---
+title: Portfolio value at risk (VaR) and expected shortfall (ES) using linearization
+author: Christopher Furu
+date: '2018-08-30'
+slug: value-at-risk-var-using-linearization
+categories: []
+tags:
+  - Portfolio risk
+  - R
+---
+
+```{r setup, include=FALSE}
+library(quantmod)
+library(plotly)
+library(knitr)
+library(kableExtra)
+```
+
+
+```{R message=FALSE, warning=FALSE}
+weekly_stock_returns = function(ticker, start_year) 
+{
+  # Download the data from Yahoo finance
+  symbol = getSymbols(ticker, src = 'yahoo', from = start_year, 
+                      auto.assign = FALSE, warnings = FALSE) 
+  # Tranform it to monthly returns using the periodReturn function from quantmod
+  data = periodReturn(symbol, period = 'weekly', type = 'log')
+  
+  # Let's rename the column of returns to something intuitive because the column
+  # name is what will eventually be displayed on the time series graph
+  colnames(data) = as.character(ticker)
+  
+  # We want to be able to work with the xts objects that result from this function 
+  # so let's explicitly put them to the global environment with an easy to use 
+  # name, the stock ticker
+  assign(ticker, data, .GlobalEnv)
+}
+
+```
+
+
+```{R message=FALSE, warning=FALSE, include=TRUE}
+year = 2015
+S1 = 'ERIC-B.ST'
+S2 = 'VOLV-B.ST'
+S3 = 'HUFV-A.ST'
+WSR1 = weekly_stock_returns(S1, year)
+WSR2 = weekly_stock_returns(S2, year)
+WSR3 = weekly_stock_returns(S3, year)
+TotReturns = WSR1+WSR2+WSR3
+WSR = data.frame(date = index(TotReturns), Returns = TotReturns, row.names=NULL)
+colnames(WSR) = c("Date", "TotalReturns")
+```
+
+```{r, echo = FALSE, results = "show"}
+head(WSR) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+
+```{R message=FALSE, warning=FALSE, include=TRUE}
+V0 = 10000
+sigma = sd(WSR$TotalReturns)
+mu = sum(WSR$TotalReturns)/length(WSR$TotalReturns)
+r0 = 0.02
+T = 2*52 #2 years in weeks
+v = c()
+vec_V2 = c()
+sampleSize = 10000
+ZCB_T = V0*exp(r0*T/52)
+VaR = c()
+ES = c()
+gains = c()
+prob = 0.01
+```
+
+```{R message=FALSE, warning=FALSE, include=TRUE}
+for (i in 0:sampleSize){
+  V2 = V0
+  
+  for (j in 1:T){
+    v[j] = exp(mu+sigma*rnorm(1, mean = 0, sd = 1))
+    V2 = V2*v[j]
+  }
+  
+  vec_V2[i] = V2
+  gains[i] = -(vec_V2[i]-V0)
+  gains = sort(gains, decreasing = FALSE, na.last = NA)
+  VaR[i] = gains[i*prob]
+  ES[i] = sum(gains[1:(i*prob)])/length(gains[1:(i*prob)])
+  
+}
+```
+
+
+```{R message=FALSE, warning=FALSE, include=TRUE}
+p = ppoints(sampleSize)
+data = data.frame(p, VaR, ES)
+```
+
+
+```{R message=FALSE, warning=FALSE, include=TRUE}
+plot_ly(x = ~vec_V2, name = "Portfolio values", type = "histogram")
+plot_ly(data, x = ~p, y = ~VaR, name = "Value at risk", type = "scatter", mode = "lines")%>%
+  add_trace(y = ~ES, name = "Expected shortfall", mode = "lines")
+```
+
+
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ChristopherFuru</title>
+    <link>https://hardcore-banach-5d0897.netlify.com/tags/</link>
+    <description>Recent content in Tags on ChristopherFuru</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hardcore-banach-5d0897.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Investment Portfolio</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/tags/investment-portfolio/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/tags/investment-portfolio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Portfolio Risk</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/tags/portfolio-risk/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/tags/portfolio-risk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/tags/python/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/tags/r/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/tags/r/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

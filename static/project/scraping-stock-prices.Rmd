@@ -1,0 +1,184 @@
+---
+title: Scraping stock prices
+author: Christopher Furu
+date: '2018-08-28'
+slug: scraping-stock-prices
+tags: ["R"]
+categories:
+  - Investment portfolio
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+library(knitr)
+library(kableExtra)
+```
+# Introduction
+In this report I will load stock tickers from an excel file in order to use the tickers when downloading historical price data for each stock. So firstly I will use the xlrd-library in order to open and retrieve excel-data. Secondly I will use Maik Rosenheinrich beautiful functions that enables talking to Yahoo-finance in order to retrieve price-data *(see his blogpost at [blogpost](https://maikros.github.io/yahoo-finance-python/))*. Lastly I will manipulate the data in order to only "store" close prices together with daily returns.
+
+
+# Method
+## Importing tickers from excel-file
+The procedure to fetch data from an excel file is of course identical with the one presented in the earlier post, i.e.
+```{python, python.reticulate = TRUE}
+import xlrd
+import pandas as pd
+
+excel_dir = "../../static/excelfiles/tickers.xlsx"
+wb = xlrd.open_workbook(excel_dir)
+sh = wb.sheet_by_name('Data')
+
+Tickers = []
+for i in range(1, sh.nrows):
+  Tickers.append(sh.cell_value(i,0))
+```
+
+and the result, as before, looks like this
+
+```{r, echo = FALSE, results = "show"}
+py$Tickers %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Scraping functions
+Now lets define a function that fetch stock prices using Yahoo-finance API.
+The function follows, together with a function that transforms the list of data into a pandas dataframe.
+```{python, python.reticulate = TRUE}
+from bs4 import BeautifulSoup
+import re
+
+def _get_crumbs_and_cookies(stock):
+    
+    url = 'https://finance.yahoo.com/quote/{}/history'.format(stock)
+    with requests.session():
+        header = {'Connection': 'keep-alive',
+                   'Expires': '-1',
+                   'Upgrade-Insecure-Requests': '1',
+                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) \
+                   AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
+                   }
+        
+        website = requests.get(url, headers=header)
+        soup = BeautifulSoup(website.text, 'lxml')
+        crumb = re.findall('"CrumbStore":{"crumb":"(.+?)"}', str(soup))
+
+        return (header, crumb[0], website.cookies)
+```
+
+Now we write a function to transform the dates into unix timestamps since Yahoo-Finance demands this format in the URL-request
+
+```{python, python.reticulate = TRUE}
+from datetime import datetime
+from time import mktime
+
+def convert_to_unix(date):
+    datum = datetime.strptime(date, '%d-%m-%Y')
+    
+    return int(mktime(datum.timetuple()))
+```
+
+Since the data will be expressed in the comma separated list we write a function that interpreters the list and transform it into a pandas dataframe, the function follows:
+
+```{python, python.reticulate = TRUE}
+def list_to_dataframe(data, stock):
+    headers = data[0].split(',')
+    list = []
+    for i in range(1, len(data)):
+        list.append(data[i].split(','))
+    try:
+        df = pd.DataFrame(list, columns = headers)
+        df['Ticker'] = stock
+    except:
+        df = pd.DataFrame(columns = headers)
+        df['Ticker'] = stock
+    return df
+```
+
+Now we can put these three functions into work together with a url request function in order to obtain the price data for each stock, the function follows:
+
+```{python, python.reticulate = TRUE}
+import requests
+
+def load_stock_prices(stock, day_begin, day_end, interval='1d'):
+    day_begin_unix = convert_to_unix(day_begin)
+    day_end_unix = convert_to_unix(day_end)
+
+    header, crumb, cookies = _get_crumbs_and_cookies(stock)
+    
+    with requests.session():
+        url = 'https://query1.finance.yahoo.com/v7/finance/download/' \
+              '{stock}?period1={day_begin}&period2={day_end}&interval={interval}&events=history&crumb={crumb}' \
+              .format(stock=stock, day_begin=day_begin_unix, day_end=day_end_unix, interval=interval, crumb=crumb)
+                
+        website = requests.get(url, headers=header, cookies=cookies)
+        data = website.text.split('\n')[:-1]
+        dataframe = list_to_dataframe(data, stock)
+
+        return dataframe
+```
+
+
+Now finally lets utilize our functions and scrape Yahoo-Finance for the data that we are after for each symbol/ticker
+
+```{python, include = FALSE}
+import pandas as pd
+df_master = []
+day_begin = "20-07-2018"
+day_end = "31-07-2018"
+for i in range(0, len(Tickers)):
+  data = load_stock_prices(Tickers[i], day_begin, day_end)
+  df_master.append(data)
+  
+prices = pd.concat(df_master, ignore_index = True)
+```
+
+```{r, echo = FALSE, results = "show"}
+py$prices %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+# Result
+Now we fill the null's with zeros and subsetting the dataframe into (**date, ticker, closeprice**)
+
+```{python}
+ClosePrices = prices[['Date', 'Ticker', 'Close']]
+ClosePrices = pd.DataFrame(ClosePrices)
+ClosePrices[ClosePrices['Close'] == 'null'] = 0.0
+ClosePrices[ClosePrices['Close'] == 'null']
+#ClosePrices['Date'] = pd.to_datetime(ClosePrices['Date'], errors='coerce')
+ClosePrices = ClosePrices.dropna(subset=['Date'])
+ClosePrices = ClosePrices.fillna(0.0)
+```
+
+```{python, include = FALSE}
+ClosePrices['Date'] = pd.to_datetime(ClosePrices['Date']).dt.date
+ClosePrices['Ticker'] = ClosePrices.Ticker.astype(str)
+ClosePrices['Close'] = ClosePrices.Close.astype(float)
+ClosePrices.dtypes
+```
+
+
+```{r, echo = FALSE, results = "show"}
+py$ClosePrices %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+Finally we calculate the daily returns based on the daily close-price
+
+```{python}
+#ClosePrices = ClosePrices.sort_values(['Ticker','Date']).reset_index(drop = True)
+ClosePrices['Return'] = ClosePrices.groupby('Ticker')['Close'].pct_change()
+ClosePrices = ClosePrices.dropna()
+```
+
+```{r, echo = FALSE, results = "show"}
+py$ClosePrices %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```

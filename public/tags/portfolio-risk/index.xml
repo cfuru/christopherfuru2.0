@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Portfolio Risk on ChristopherFuru</title>
+    <link>https://hardcore-banach-5d0897.netlify.com/tags/portfolio-risk/</link>
+    <description>Recent content in Portfolio Risk on ChristopherFuru</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hardcore-banach-5d0897.netlify.com/tags/portfolio-risk/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Portfolio value at risk (VaR) and expected shortfall (ES) using linearization</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/post/value-at-risk-var-using-linearization/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/post/value-at-risk-var-using-linearization/</guid>
+      <description>weekly_stock_returns = function(ticker, start_year) {# Download the data from Yahoo financesymbol = getSymbols(ticker, src = &amp;#39;yahoo&amp;#39;, from = start_year, auto.assign = FALSE, warnings = FALSE) # Tranform it to monthly returns using the periodReturn function from quantmoddata = periodReturn(symbol, period = &amp;#39;weekly&amp;#39;, type = &amp;#39;log&amp;#39;)# Let&amp;#39;s rename the column of returns to something intuitive because the column# name is what will eventually be displayed on the time series graphcolnames(data) = as.</description>
+    </item>
+    
+  </channel>
+</rss>

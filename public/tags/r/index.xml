@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on ChristopherFuru</title>
+    <link>https://hardcore-banach-5d0897.netlify.com/tags/r/</link>
+    <description>Recent content in R on ChristopherFuru</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hardcore-banach-5d0897.netlify.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Portfolio value at risk (VaR) and expected shortfall (ES) using linearization</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/post/value-at-risk-var-using-linearization/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/post/value-at-risk-var-using-linearization/</guid>
+      <description>weekly_stock_returns = function(ticker, start_year) {# Download the data from Yahoo financesymbol = getSymbols(ticker, src = &amp;#39;yahoo&amp;#39;, from = start_year, auto.assign = FALSE, warnings = FALSE) # Tranform it to monthly returns using the periodReturn function from quantmoddata = periodReturn(symbol, period = &amp;#39;weekly&amp;#39;, type = &amp;#39;log&amp;#39;)# Let&amp;#39;s rename the column of returns to something intuitive because the column# name is what will eventually be displayed on the time series graphcolnames(data) = as.</description>
+    </item>
+    
+    <item>
+      <title>Storing data in Azure</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/project/storing-data-in-azure/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/project/storing-data-in-azure/</guid>
+      <description>IntroductionMethodStoring fundamentals dataStoring stock pricesResultHistorical stock pricesFundamental stock dataIntroductionIn this post I will give an example of one way to store data into a Microsoft SQL server located on the Azure cloud. I will do this both for the fundamentals data from an earlier post but also for the price data, also from an earlier post. The storing procedure will look identical for both cases.</description>
+    </item>
+    
+    <item>
+      <title>Hello world</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/post/hello-world/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/post/hello-world/</guid>
+      <description>Testing my existence
+1+1## [1] 2seems like I exist</description>
+    </item>
+    
+    <item>
+      <title>Scraping stock fundamentals</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-fundamentals/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-fundamentals/</guid>
+      <description>Importing tickers from an excelfileLets start by importing tickers/symbols from a regular xlsx excel file, where I have stored the symbols/tickers in a column named “Ticker”. The talked-about excelsheet looks like this
+Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix \(10^(12)\)
+Now lets write some simple python code to assimilate the necessary information in the excel sheet. The methodology will be to loop through the column “Ticker” and store each ticker in a pandas dataframe.</description>
+    </item>
+    
+    <item>
+      <title>Scraping stock prices</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-prices/</link>
+      <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-prices/</guid>
+      <description>IntroductionMethodImporting tickers from excel-fileScraping functionsResultIntroductionIn this report I will load stock tickers from an excel file in order to use the tickers when downloading historical price data for each stock. So firstly I will use the xlrd-library in order to open and retrieve excel-data. Secondly I will use Maik Rosenheinrich beautiful functions that enables talking to Yahoo-finance in order to retrieve price-data (see his blogpost at blogpost).</description>
+    </item>
+    
+  </channel>
+</rss>

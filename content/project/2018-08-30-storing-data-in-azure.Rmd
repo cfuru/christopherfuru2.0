@@ -1,0 +1,133 @@
+---
+title: Storing data in Azure
+author: Christopher Furu
+date: '2018-08-30'
+slug: storing-data-in-azure
+categories: []
+tags:
+  - Investment portfolio
+  - Python
+  - R
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+library(knitr)
+library(kableExtra)
+library(RODBC)
+```
+#Introduction
+In this post I will give an example of one way to store data into a Microsoft SQL server located on the Azure cloud. I will do this both for the fundamentals data from an earlier post but also for the price data, also from an earlier post. The storing procedure will look identical for both cases. Lastly I will show an output, from the SQL-server, of the data when stored.
+
+#Method
+
+##Storing fundamentals data
+This is one, ugly but workable, way to store data into the Microsoft SQL server. The query start by checking if there is any data stored by the combination of (**Date, ticker**) and if there is no match the data will be stored.
+```{python, eval=FALSE, include = TRUE}
+cnxn, cursor = mssql_connect(server, database, username, password, driver)
+data = df.values.tolist()
+for i, item in enumerate(data):
+    insert_query = "IF NOT EXISTS ( \
+            SELECT * \
+            FROM [stockData].[fundamentals] \
+            WHERE [Date] = '" + str(item[1]) + "' AND [Ticker] = '" + str(item[2]) + "') \
+            BEGIN \
+            INSERT INTO [stockData].[fundamentals] \
+            VALUES ('" + str(item[1]) + \
+                    "','" + str(item[2]) + \
+                    "','" + str(item[3]) + \
+                    "'," + str(item[4]) + \
+                    "," + str(item[5]) + \
+                    "," + str(item[6]) + \
+                    "," + str(item[7]) + \
+                    "," + str(item[8]) + \
+                    "," + str(item[9]) + \
+                    "," + str(item[10]) + \
+                    "," + str(item[11]) + \
+                    "," + str(item[12]) + ") \
+            END"
+    #print(insert_query)
+    cursor.execute(insert_query)
+    
+    
+#Cleanup
+cnxn.commit()
+cursor.close()
+cnxn.close()
+```
+
+## Storing stock prices
+Using the same, ugly but workable, logic as before we can store the data by first checking if any combination of (**date, ticker**) exists, otherwise store the data. Further I have originally split up the dataset in chunks of 100's in order not the get any truble with the SQL-connection.
+```{python, eval=FALSE, include = TRUE}
+cnxn, cursor = mssql_connect(server, database, username, password, driver)
+
+for chunks in np.array_split(ClosePrices, 100):
+    data = chunks.values.tolist()
+    for i, item in enumerate(data):
+        insert_query = "IF NOT EXISTS ( \
+                SELECT * \
+                FROM [stockData].[closePrices] \
+                WHERE [Date] = '" + str(item[0]) + "' AND [Ticker] = '" + str(item[1]) + "') \
+                BEGIN \
+                INSERT INTO [stockData].[closePrices] \
+                VALUES ('" + str(item[0]) + "','" + str(item[1]) + "'," + str(item[2]) + "," + str(item[3]) + ") \
+                END"
+
+        cursor.execute(insert_query)
+    cnxn.commit()
+    
+# Cleanup
+cursor.close()
+cnxn.close()
+```
+
+```{r, include = FALSE}
+dbserver = Sys.getenv("dbserver")
+db = Sys.getenv("db")
+dbUID = Sys.getenv("dbUID")
+dbpass = Sys.getenv("dbpass")
+
+library(DBI)
+library(odbc)
+con = dbConnect(odbc::odbc(),
+                   Driver    = "SQL Server", 
+                   Server    = dbserver,
+                   Database  = db,
+                   UID       = dbUID,
+                   PWD       = dbpass,
+                   Port      = 1433)
+```
+
+#Result
+
+##Historical stock prices
+When stored, the stock price data looks like this
+```{sql, connection = con, output.var="Prices"}
+
+SELECT TOP 10 * FROM stockData.closePrices
+
+```
+
+```{r, echo = FALSE, results = "show"}
+Prices %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Fundamental stock data
+When stored, the fundamental stock data looks like this
+```{sql, connection = con, output.var="fundamentals"}
+
+SELECT TOP 10 * FROM stockData.fundamentals
+
+```
+
+```{r, echo = FALSE, results = "show"}
+fundamentals %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(width = "800px", height = "500px")
+```

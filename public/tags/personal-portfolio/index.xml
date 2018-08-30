@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Personal Portfolio on ChristopherFuru</title>
+    <link>/tags/personal-portfolio/</link>
+    <description>Recent content in Personal Portfolio on ChristopherFuru</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/personal-portfolio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Storing data in Azure</title>
+      <link>/project/storing-data-in-azure/</link>
+      <pubDate>Thu, 30 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/project/storing-data-in-azure/</guid>
+      <description>IntroductionMethodStoring fundamentals dataStoring stock pricesResultHistorical stock pricesFundamental stock dataIntroductionIn this post I will give an example of one way to store data into a Microsoft SQL server located on the Azure cloud. I will do this both for the fundamentals data from an earlier post but also for the price data, also from an earlier post. The storing procedure will look identical for both cases.</description>
+    </item>
+    
+  </channel>
+</rss>
