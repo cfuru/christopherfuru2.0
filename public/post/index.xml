@@ -20,15 +20,5 @@
       <description>weekly_stock_returns = function(ticker, start_year) {# Download the data from Yahoo financesymbol = getSymbols(ticker, src = &amp;#39;yahoo&amp;#39;, from = start_year, auto.assign = FALSE, warnings = FALSE) # Tranform it to monthly returns using the periodReturn function from quantmoddata = periodReturn(symbol, period = &amp;#39;weekly&amp;#39;, type = &amp;#39;log&amp;#39;)# Let&amp;#39;s rename the column of returns to something intuitive because the column# name is what will eventually be displayed on the time series graphcolnames(data) = as.</description>
     </item>
     
-    <item>
-      <title>Hello world</title>
-      <link>https://hardcore-banach-5d0897.netlify.com/post/hello-world/</link>
-      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://hardcore-banach-5d0897.netlify.com/post/hello-world/</guid>
-      <description>Testing my existence
-1+1## [1] 2seems like I exist</description>
-    </item>
-    
   </channel>
 </rss>

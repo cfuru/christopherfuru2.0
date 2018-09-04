@@ -30,16 +30,6 @@
     </item>
     
     <item>
-      <title>Hello world</title>
-      <link>https://hardcore-banach-5d0897.netlify.com/post/hello-world/</link>
-      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://hardcore-banach-5d0897.netlify.com/post/hello-world/</guid>
-      <description>Testing my existence
-1+1## [1] 2seems like I exist</description>
-    </item>
-    
-    <item>
       <title>Scraping stock fundamentals</title>
       <link>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-fundamentals/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
