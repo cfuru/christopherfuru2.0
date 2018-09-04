@@ -1,7 +1,7 @@
 ---
 title: Scraping stock prices
 author: Christopher Furu
-date: '2018-08-28'
+date: '2018-09-04'
 slug: scraping-stock-prices
 categories: []
 tags:
@@ -171,7 +171,7 @@ py$ClosePrices %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
-Finally we calculate the daily returns based on the daily close-price
+Finally we calculate the daily returns, based on the daily close-price
 
 ```{python}
 #ClosePrices = ClosePrices.sort_values(['Ticker','Date']).reset_index(drop = True)
@@ -184,3 +184,4 @@ py$ClosePrices %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
+  kable_styling(bootstrap_options = c("striped", "hover"))

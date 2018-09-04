@@ -6,10 +6,19 @@
     <description>Recent content in R on ChristopherFuru</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hardcore-banach-5d0897.netlify.com/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Scraping stock prices</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-prices/</link>
+      <pubDate>Tue, 04 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-prices/</guid>
+      <description>IntroductionMethodImporting tickers from excel-fileScraping functionsResultIntroductionIn this report I will load stock tickers from an excel file in order to use the tickers when downloading historical price data for each stock. So firstly I will use the xlrd-library in order to open and retrieve excel-data. Secondly I will use Maik Rosenheinrich beautiful functions that enables talking to Yahoo-finance in order to retrieve price-data (see his blogpost at blogpost).</description>
+    </item>
     
     <item>
       <title>Portfolio value at risk (VaR) and expected shortfall (ES) using linearization</title>
@@ -38,15 +47,6 @@
       <description>Importing tickers from an excelfileLets start by importing tickers/symbols from a regular xlsx excel file, where I have stored the symbols/tickers in a column named “Ticker”. The talked-about excelsheet looks like this
 Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix \(10^(12)\)
 Now lets write some simple python code to assimilate the necessary information in the excel sheet. The methodology will be to loop through the column “Ticker” and store each ticker in a pandas dataframe.</description>
-    </item>
-    
-    <item>
-      <title>Scraping stock prices</title>
-      <link>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-prices/</link>
-      <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://hardcore-banach-5d0897.netlify.com/project/scraping-stock-prices/</guid>
-      <description>IntroductionMethodImporting tickers from excel-fileScraping functionsResultIntroductionIn this report I will load stock tickers from an excel file in order to use the tickers when downloading historical price data for each stock. So firstly I will use the xlrd-library in order to open and retrieve excel-data. Secondly I will use Maik Rosenheinrich beautiful functions that enables talking to Yahoo-finance in order to retrieve price-data (see his blogpost at blogpost).</description>
     </item>
     
   </channel>

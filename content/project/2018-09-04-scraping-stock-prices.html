@@ -1,7 +1,7 @@
 ---
 title: Scraping stock prices
 author: Christopher Furu
-date: '2018-08-28'
+date: '2018-09-04'
 slug: scraping-stock-prices
 categories: []
 tags:
@@ -906,7 +906,7 @@ ASSA-B.ST
 </tr>
 </tbody>
 </table>
-<p>Finally we calculate the daily returns based on the daily close-price</p>
+<p>Finally we calculate the daily returns, based on the daily close-price</p>
 <pre class="python"><code>#ClosePrices = ClosePrices.sort_values([&#39;Ticker&#39;,&#39;Date&#39;]).reset_index(drop = True)
 ClosePrices[&#39;Return&#39;] = ClosePrices.groupby(&#39;Ticker&#39;)[&#39;Close&#39;].pct_change()
 ClosePrices = ClosePrices.dropna()</code></pre>
@@ -1170,4 +1170,5 @@ ASSA-B.ST
 </tr>
 </tbody>
 </table>
+<p>kable_styling(bootstrap_options = c(“striped”, “hover”))</p>
 </div>
