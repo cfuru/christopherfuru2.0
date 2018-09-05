@@ -127,10 +127,13 @@ def load_stock_prices(stock, day_begin, day_end, interval=&#39;1d&#39;):
 <thead>
 <tr>
 <th style="text-align:left;">
-Date
+Adj Close
 </th>
 <th style="text-align:left;">
-Open
+Close
+</th>
+<th style="text-align:left;">
+Date
 </th>
 <th style="text-align:left;">
 High
@@ -139,21 +142,27 @@ High
 Low
 </th>
 <th style="text-align:left;">
-Close
+Open
 </th>
 <th style="text-align:left;">
-Adj Close
+Ticker
 </th>
 <th style="text-align:left;">
 Volume
 </th>
 <th style="text-align:left;">
-Ticker
+{
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+null
+</td>
+<td style="text-align:left;">
+null
+</td>
 <td style="text-align:left;">
 2018-07-19
 </td>
@@ -167,24 +176,24 @@ null
 null
 </td>
 <td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
 ABB.ST
+</td>
+<td style="text-align:left;">
+null
+</td>
+<td style="text-align:left;">
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-20
+199.000000
 </td>
 <td style="text-align:left;">
-201.500000
+199.000000
+</td>
+<td style="text-align:left;">
+2018-07-20
 </td>
 <td style="text-align:left;">
 201.699997
@@ -193,24 +202,27 @@ ABB.ST
 196.100006
 </td>
 <td style="text-align:left;">
-199.000000
+201.500000
 </td>
 <td style="text-align:left;">
-199.000000
+ABB.ST
 </td>
 <td style="text-align:left;">
 1789192
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-23
+197.350006
 </td>
 <td style="text-align:left;">
-198.149994
+197.350006
+</td>
+<td style="text-align:left;">
+2018-07-23
 </td>
 <td style="text-align:left;">
 198.500000
@@ -219,24 +231,27 @@ ABB.ST
 196.149994
 </td>
 <td style="text-align:left;">
-197.350006
+198.149994
 </td>
 <td style="text-align:left;">
-197.350006
+ABB.ST
 </td>
 <td style="text-align:left;">
 1122642
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-24
+198.399994
 </td>
 <td style="text-align:left;">
-198.000000
+198.399994
+</td>
+<td style="text-align:left;">
+2018-07-24
 </td>
 <td style="text-align:left;">
 199.600006
@@ -245,24 +260,27 @@ ABB.ST
 197.600006
 </td>
 <td style="text-align:left;">
-198.399994
+198.000000
 </td>
 <td style="text-align:left;">
-198.399994
+ABB.ST
 </td>
 <td style="text-align:left;">
 1027831
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-25
+196.600006
 </td>
 <td style="text-align:left;">
-198.399994
+196.600006
+</td>
+<td style="text-align:left;">
+2018-07-25
 </td>
 <td style="text-align:left;">
 198.750000
@@ -271,24 +289,27 @@ ABB.ST
 195.949997
 </td>
 <td style="text-align:left;">
-196.600006
+198.399994
 </td>
 <td style="text-align:left;">
-196.600006
+ABB.ST
 </td>
 <td style="text-align:left;">
 860044
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-26
+200.699997
 </td>
 <td style="text-align:left;">
-197.699997
+200.699997
+</td>
+<td style="text-align:left;">
+2018-07-26
 </td>
 <td style="text-align:left;">
 201.199997
@@ -297,24 +318,27 @@ ABB.ST
 197.000000
 </td>
 <td style="text-align:left;">
-200.699997
+197.699997
 </td>
 <td style="text-align:left;">
-200.699997
+ABB.ST
 </td>
 <td style="text-align:left;">
 991049
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-27
+202.199997
 </td>
 <td style="text-align:left;">
-201.000000
+202.199997
+</td>
+<td style="text-align:left;">
+2018-07-27
 </td>
 <td style="text-align:left;">
 202.699997
@@ -323,24 +347,27 @@ ABB.ST
 200.500000
 </td>
 <td style="text-align:left;">
-202.199997
+201.000000
 </td>
 <td style="text-align:left;">
-202.199997
+ABB.ST
 </td>
 <td style="text-align:left;">
 495496
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-30
+200.899994
 </td>
 <td style="text-align:left;">
-201.000000
+200.899994
+</td>
+<td style="text-align:left;">
+2018-07-30
 </td>
 <td style="text-align:left;">
 201.500000
@@ -349,24 +376,27 @@ ABB.ST
 200.000000
 </td>
 <td style="text-align:left;">
-200.899994
+201.000000
 </td>
 <td style="text-align:left;">
-200.899994
+ABB.ST
 </td>
 <td style="text-align:left;">
 660702
 </td>
 <td style="text-align:left;">
-ABB.ST
+NaN
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-2018-07-31
+201.899994
 </td>
 <td style="text-align:left;">
-200.199997
+201.899994
+</td>
+<td style="text-align:left;">
+2018-07-31
 </td>
 <td style="text-align:left;">
 202.500000
@@ -375,250 +405,16 @@ ABB.ST
 199.600006
 </td>
 <td style="text-align:left;">
-201.899994
+200.199997
 </td>
 <td style="text-align:left;">
-201.899994
+ABB.ST
 </td>
 <td style="text-align:left;">
 597134
 </td>
 <td style="text-align:left;">
-ABB.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-19
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-null
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-20
-</td>
-<td style="text-align:left;">
-172.500000
-</td>
-<td style="text-align:left;">
-174.300003
-</td>
-<td style="text-align:left;">
-171.750000
-</td>
-<td style="text-align:left;">
-174.050003
-</td>
-<td style="text-align:left;">
-174.050003
-</td>
-<td style="text-align:left;">
-3145646
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-23
-</td>
-<td style="text-align:left;">
-173.949997
-</td>
-<td style="text-align:left;">
-174.100006
-</td>
-<td style="text-align:left;">
-173.000000
-</td>
-<td style="text-align:left;">
-173.399994
-</td>
-<td style="text-align:left;">
-173.399994
-</td>
-<td style="text-align:left;">
-1473629
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-24
-</td>
-<td style="text-align:left;">
-173.449997
-</td>
-<td style="text-align:left;">
-174.199997
-</td>
-<td style="text-align:left;">
-172.899994
-</td>
-<td style="text-align:left;">
-173.600006
-</td>
-<td style="text-align:left;">
-173.600006
-</td>
-<td style="text-align:left;">
-1986200
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-25
-</td>
-<td style="text-align:left;">
-173.300003
-</td>
-<td style="text-align:left;">
-174.300003
-</td>
-<td style="text-align:left;">
-172.699997
-</td>
-<td style="text-align:left;">
-173.899994
-</td>
-<td style="text-align:left;">
-173.899994
-</td>
-<td style="text-align:left;">
-1597078
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-26
-</td>
-<td style="text-align:left;">
-175.449997
-</td>
-<td style="text-align:left;">
-175.649994
-</td>
-<td style="text-align:left;">
-174.199997
-</td>
-<td style="text-align:left;">
-175.149994
-</td>
-<td style="text-align:left;">
-175.149994
-</td>
-<td style="text-align:left;">
-1696739
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-27
-</td>
-<td style="text-align:left;">
-175.649994
-</td>
-<td style="text-align:left;">
-175.649994
-</td>
-<td style="text-align:left;">
-173.649994
-</td>
-<td style="text-align:left;">
-175.000000
-</td>
-<td style="text-align:left;">
-175.000000
-</td>
-<td style="text-align:left;">
-1649544
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-30
-</td>
-<td style="text-align:left;">
-174.800003
-</td>
-<td style="text-align:left;">
-175.100006
-</td>
-<td style="text-align:left;">
-173.449997
-</td>
-<td style="text-align:left;">
-174.750000
-</td>
-<td style="text-align:left;">
-174.750000
-</td>
-<td style="text-align:left;">
-1265085
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2018-07-31
-</td>
-<td style="text-align:left;">
-174.300003
-</td>
-<td style="text-align:left;">
-174.800003
-</td>
-<td style="text-align:left;">
-173.199997
-</td>
-<td style="text-align:left;">
-174.350006
-</td>
-<td style="text-align:left;">
-174.350006
-</td>
-<td style="text-align:left;">
-1544598
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
+NaN
 </td>
 </tr>
 </tbody>
@@ -778,132 +574,6 @@ ABB.ST
 201.90
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-9
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-0.0
-</td>
-<td style="text-align:right;">
-0.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-10
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-174.05
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-11
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-173.40
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-12
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-173.60
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-173.90
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-14
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-175.15
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-15
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-175.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-16
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-174.75
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-17
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-174.35
-</td>
-</tr>
 </tbody>
 </table>
 <p>Finally we calculate the daily returns, based on the daily close-price</p>
@@ -1047,125 +717,6 @@ ABB.ST
 </td>
 <td style="text-align:right;">
 0.0049776
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-11
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-173.40
-</td>
-<td style="text-align:right;">
--0.0037346
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-12
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-173.60
-</td>
-<td style="text-align:right;">
-0.0011535
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-13
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-173.90
-</td>
-<td style="text-align:right;">
-0.0017280
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-14
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-175.15
-</td>
-<td style="text-align:right;">
-0.0071880
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-15
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-175.00
-</td>
-<td style="text-align:right;">
--0.0008564
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-16
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-174.75
-</td>
-<td style="text-align:right;">
--0.0014286
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-17
-</td>
-<td style="text-align:left;">
-&lt;environment&gt;
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-174.35
-</td>
-<td style="text-align:right;">
--0.0022889
 </td>
 </tr>
 </tbody>
