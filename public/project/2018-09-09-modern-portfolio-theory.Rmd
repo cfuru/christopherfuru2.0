@@ -1,0 +1,80 @@
+---
+title: Modern portfolio theory
+author: Christopher Furu
+date: '2018-09-09'
+slug: modern-portfolio-theory
+categories: []
+tags:
+  - Investment portfolio
+  - R
+---
+
+```{r setup, include=FALSE}
+library(kableExtra)
+library(tidyverse)
+library(tidyquant)
+library(timetk)
+library(tibbletime)
+library(dplyr)
+library(DBI)
+library(odbc)
+library(xts)
+``` 
+
+wohoo
+
+```{r, include = FALSE}
+dbserver = Sys.getenv("dbserver")
+db = Sys.getenv("db")
+dbUID = Sys.getenv("dbUID")
+dbpass = Sys.getenv("dbpass")
+
+con = dbConnect(odbc::odbc(),
+                   Driver    = "SQL Server", 
+                   Server    = dbserver,
+                   Database  = db,
+                   UID       = dbUID,
+                   PWD       = dbpass,
+                   Port      = 1433)
+```
+
+```{sql, connection = con, output.var="Prices"}
+SELECT * FROM stockData.closePrices
+```
+
+```{r, echo = FALSE, results = "show"}
+head(Prices) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r}
+Prices$Date = as.Date(Prices$Date, format = "%Y-%m-%d")
+
+Prices = Prices %>%
+          group_by(Ticker) %>%
+          tq_transmute(select = ClosePrice,
+                       mutate_fun = periodReturn,
+                       period = "monthly",
+                       type = "log")
+```
+
+```{r, echo = FALSE, results = "show"}
+head(Prices) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r}
+Prices$Date = as.Date(Prices$Date, format = "%Y-%m-%d")
+
+Prices = Prices %>%
+          group_by(Ticker) %>%
+          mutate(cumsum_returns = cumsum(monthly.returns))
+```
+
+```{r, echo = FALSE, results = "show"}
+head(Prices) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```

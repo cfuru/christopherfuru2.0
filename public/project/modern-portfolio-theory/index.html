@@ -4,7 +4,7 @@
          
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Scraping stock fundamentals</title>
+        <title>Modern portfolio theory</title>
         
         <style>
 
@@ -80,7 +80,7 @@
 
                 <div class="navbar-header">
 
-                    <a class="navbar-brand visible-xs" href="#">Scraping stock fundamentals</a>
+                    <a class="navbar-brand visible-xs" href="#">Modern portfolio theory</a>
 
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
@@ -134,12 +134,10 @@
     
     
 
-    <h4><a href="/project/scraping-stock-fundamentals/">Scraping stock fundamentals</a></h4>
-    <h5>August 29, 2018</h5>
+    <h4><a href="/project/modern-portfolio-theory/">Modern portfolio theory</a></h4>
+    <h5>September 9, 2018</h5>
     
     <a href="https://hardcore-banach-5d0897.netlify.com/tags/investment-portfolio"><kbd class="item-tag">Investment portfolio</kbd></a>
-    
-    <a href="https://hardcore-banach-5d0897.netlify.com/tags/python"><kbd class="item-tag">Python</kbd></a>
     
     <a href="https://hardcore-banach-5d0897.netlify.com/tags/r"><kbd class="item-tag">R</kbd></a>
     
@@ -150,232 +148,8 @@
     <br> <div class="text-justify"><script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
-<div id="importing-tickers-from-an-excelfile" class="section level2">
-<h2>Importing tickers from an excelfile</h2>
-<p>Lets start by importing tickers/symbols from a regular xlsx excel file, where I have stored the symbols/tickers in a column named “Ticker”. The talked-about excelsheet looks like this</p>
-<div class="figure">
-<img src="../../images/excel_sheet_1.png" alt="Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix 10^(12)" />
-<p class="caption"><em>Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix <span class="math inline">\(10^(12)\)</span></em></p>
-</div>
-<p>Now lets write some simple python code to assimilate the necessary information in the excel sheet. The methodology will be to loop through the column “Ticker” and store each ticker in a pandas dataframe. A example of doing this follows</p>
-<pre class="python"><code>import xlrd
-import pandas as pd
-excel_dir = &quot;../../static/excelfiles/tickers.xlsx&quot;
-wb = xlrd.open_workbook(excel_dir)
-sh = wb.sheet_by_name(&#39;Data&#39;)
-Records = []
-for i in range (1, sh.nrows):
-    Records.append(sh.cell_value(i,0))
-headers = [&#39;Ticker&#39;]
-Tickers = pd.DataFrame(Records, columns = headers)</code></pre>
-<p>and the result of this code looks like this</p>
-<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Ticker
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-ABB.ST
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="master-dataframe" class="section level2">
-<h2>Master dataframe</h2>
-<p>Now we create an empty pandas dataframe that will define the structure to hold financial data for each ticker. This procedure can easily be done by adding new columns to the allready existing pandas dataframe, containing the tickers. The python code for doing this follows</p>
-<pre class="python"><code>Tickers = Tickers.reindex(columns = [&#39;Date&#39;, &#39;Ticker&#39;, &#39;Link&#39;])
-items = [&#39;Enterprise Value&#39;, &#39;Enterprise Value/Revenue&#39;, &#39;Diluted EPS&#39;,
-         &#39;Enterprise Value/EBITDA&#39;, &#39;Revenue&#39;, &#39;EBITDA&#39;, &#39;Trailing P/E&#39;, 
-         &#39;Total Cash&#39;, &#39;Total Debt&#39;]
-Tickers = Tickers.reindex(columns=[*Tickers.columns.tolist(), *items], fill_value=0.0)
-Tickers = Tickers.fillna(0.0)</code></pre>
-<p>and the output looks like this</p>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; overflow-x: scroll; width:800px; ">
-<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Date
-</th>
-<th style="text-align:left;">
-Ticker
-</th>
-<th style="text-align:right;">
-Link
-</th>
-<th style="text-align:right;">
-Enterprise Value
-</th>
-<th style="text-align:right;">
-Enterprise Value/Revenue
-</th>
-<th style="text-align:right;">
-Diluted EPS
-</th>
-<th style="text-align:right;">
-Enterprise Value/EBITDA
-</th>
-<th style="text-align:right;">
-Revenue
-</th>
-<th style="text-align:right;">
-EBITDA
-</th>
-<th style="text-align:right;">
-Trailing P/E
-</th>
-<th style="text-align:right;">
-Total Cash
-</th>
-<th style="text-align:right;">
-Total Debt
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-ABB.ST
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:left;">
-ASSA-B.ST
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="scraping-function" class="section level2">
-<h2>Scraping function</h2>
-<p>Now we define the function that will scrape the financials from Yahoo-finance. The function will take input in the form of a pandas dataframe that must include a column p? name “Ticker” that holds all the tickers. Furhter the function will fill in the predefined dataframe with financial data and return the dataframe.</p>
-<pre class="python"><code>from bs4 import BeautifulSoup    # beautiful soup handles the html to text conversion and more
-from urllib.request import urlopen
-def load_stock_financials(data):    
-    items = [&#39;Fiscal Year Ends&#39;, &#39;Enterprise Value&#39;, &#39;Enterprise Value/Revenue&#39;, &#39;Diluted EPS&#39;,
-             &#39;Enterprise Value/EBITDA&#39;, &#39;Revenue&#39;, &#39;EBITDA&#39;, &#39;Trailing P/E&#39;, 
-             &#39;Total Cash&#39;, &#39;Total Debt&#39;]
-    #The web-scraping part
-    for i, ticker in enumerate(data[&#39;Ticker&#39;]):
-        rowIndex = data.index[i]
-        key_stats_link = &#39;https://finance.yahoo.com/quote/&#39; + ticker + &#39;/key-statistics?p=&#39; + ticker
-        key_stats_soup = BeautifulSoup(urlopen(key_stats_link).read(), &#39;html.parser&#39;).findAll(&#39;td&#39;)
-        
-        data.loc[i, &#39;Link&#39;] = key_stats_link #Adding the link to the dataframe
-      
-        #Looping through html td-tagg data
-        for j, row in enumerate(key_stats_soup):
-            #Searching for the &quot;items&quot; or topics defined in the items list
-            for item in items:
-                try:
-                    # Dangerous assumption
-                    if item == row.span.string:
-                        if item == &#39;Fiscal Year Ends&#39;:
-                            data.loc[rowIndex, &#39;Date&#39;] = key_stats_soup[j+1].string
-                        else:
-                            data.loc[rowIndex, item] = unit_converter(key_stats_soup[j+1].string)
-                #If not found, continue to next
-                except:
-                    next
-    return data</code></pre>
-<p>now we need to write some code to handle the, not so convenient, way of using prefixes namely using characters instead of numbers.</p>
-<div class="figure">
-<img src="../../images/yahoo_table_1.png" alt="Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix 10^12" />
-<p class="caption"><em>Figure 1. Example of a yahoo-finance statistics table where T is used for trillion instead of the prefix <span class="math inline">\(10^12\)</span></em></p>
-</div>
-<p>For further details see Figure 1 for a detailed example from Yahoo-finance.</p>
-<pre class="python"><code>def unit_converter(data):
-    trillion = 1e12
-    billion = 1e9
-    million = 1e6
-    if data[-1] == &#39;T&#39;:
-        return float(data[:-1])*trillion
-    elif data[-1] == &#39;B&#39;:
-        return float(data[:-1])*billion
-    elif data[-1] == &#39;M&#39;:
-        return float(data[:-1])*million
-    else:
-        return float(data)</code></pre>
-<p>Now lets scrape Yahoo and print the result on the desired form.</p>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:200px; overflow-x: scroll; width:800px; ">
+<p>wohoo</p>
+<pre class="sql"><code>SELECT * FROM stockData.closePrices</code></pre>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -385,119 +159,301 @@ Date
 <th style="text-align:left;">
 Ticker
 </th>
-<th style="text-align:left;">
-Link
+<th style="text-align:right;">
+ClosePrice
 </th>
 <th style="text-align:right;">
-Enterprise Value
-</th>
-<th style="text-align:right;">
-Enterprise Value/Revenue
-</th>
-<th style="text-align:right;">
-Diluted EPS
-</th>
-<th style="text-align:right;">
-Enterprise Value/EBITDA
-</th>
-<th style="text-align:right;">
-Revenue
-</th>
-<th style="text-align:right;">
-EBITDA
-</th>
-<th style="text-align:right;">
-Trailing P/E
-</th>
-<th style="text-align:right;">
-Total Cash
-</th>
-<th style="text-align:right;">
-Total Debt
+Return
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-&lt;environment&gt;
+2012-01-09
 </td>
 <td style="text-align:left;">
-ABB.ST
-</td>
-<td style="text-align:left;">
-<a href="https://finance.yahoo.com/quote/ABB.ST/key-statistics?p=ABB.ST" class="uri">https://finance.yahoo.com/quote/ABB.ST/key-statistics?p=ABB.ST</a>
+AAK.ST
 </td>
 <td style="text-align:right;">
-4.5716e+11
+31.6667
 </td>
 <td style="text-align:right;">
-12.87
-</td>
-<td style="text-align:right;">
-1.03
-</td>
-<td style="text-align:right;">
-95.32
-</td>
-<td style="text-align:right;">
-3.552e+10
-</td>
-<td style="text-align:right;">
-4.800e+09
-</td>
-<td style="text-align:right;">
-211.18
-</td>
-<td style="text-align:right;">
-4.08e+09
-</td>
-<td style="text-align:right;">
-1.045e+10
+-0.01298
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-&lt;environment&gt;
+2012-01-09
+</td>
+<td style="text-align:left;">
+ABB.ST
+</td>
+<td style="text-align:right;">
+134.4000
+</td>
+<td style="text-align:right;">
+-0.00371
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012-01-09
+</td>
+<td style="text-align:left;">
+AF-B.ST
+</td>
+<td style="text-align:right;">
+55.5000
+</td>
+<td style="text-align:right;">
+0.00452
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012-01-09
+</td>
+<td style="text-align:left;">
+ALFA.ST
+</td>
+<td style="text-align:right;">
+132.0000
+</td>
+<td style="text-align:right;">
+-0.00227
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012-01-09
+</td>
+<td style="text-align:left;">
+ALIV-SDB.ST
+</td>
+<td style="text-align:right;">
+393.5000
+</td>
+<td style="text-align:right;">
+0.02903
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012-01-09
 </td>
 <td style="text-align:left;">
 ASSA-B.ST
 </td>
-<td style="text-align:left;">
-<a href="https://finance.yahoo.com/quote/ASSA-B.ST/key-statistics?p=ASSA-B.ST" class="uri">https://finance.yahoo.com/quote/ASSA-B.ST/key-statistics?p=ASSA-B.ST</a>
+<td style="text-align:right;">
+57.7333
 </td>
 <td style="text-align:right;">
-2.3117e+11
-</td>
-<td style="text-align:right;">
-2.95
-</td>
-<td style="text-align:right;">
-2.95
-</td>
-<td style="text-align:right;">
-16.76
-</td>
-<td style="text-align:right;">
-7.830e+10
-</td>
-<td style="text-align:right;">
-1.379e+10
-</td>
-<td style="text-align:right;">
-63.08
-</td>
-<td style="text-align:right;">
-4.96e+08
-</td>
-<td style="text-align:right;">
-2.900e+10
+-0.00460
 </td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
+<pre class="r"><code>Prices$Date = as.Date(Prices$Date, format = &quot;%Y-%m-%d&quot;)
+
+Prices = Prices %&gt;%
+          group_by(Ticker) %&gt;%
+          tq_transmute(select = ClosePrice,
+                       mutate_fun = periodReturn,
+                       period = &quot;monthly&quot;,
+                       type = &quot;log&quot;)</code></pre>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Ticker
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:right;">
+monthly.returns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-01-31
+</td>
+<td style="text-align:right;">
+0.0587633
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-02-29
+</td>
+<td style="text-align:right;">
+0.0555038
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-03-30
+</td>
+<td style="text-align:right;">
+-0.0189589
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-04-30
+</td>
+<td style="text-align:right;">
+0.0782026
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-05-31
+</td>
+<td style="text-align:right;">
+-0.0066593
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-06-29
+</td>
+<td style="text-align:right;">
+0.0520725
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>Prices$Date = as.Date(Prices$Date, format = &quot;%Y-%m-%d&quot;)
+
+Prices = Prices %&gt;%
+          group_by(Ticker) %&gt;%
+          mutate(cumsum_returns = cumsum(monthly.returns))</code></pre>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Ticker
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:right;">
+monthly.returns
+</th>
+<th style="text-align:right;">
+cumsum_returns
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-01-31
+</td>
+<td style="text-align:right;">
+0.0587633
+</td>
+<td style="text-align:right;">
+0.0587633
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-02-29
+</td>
+<td style="text-align:right;">
+0.0555038
+</td>
+<td style="text-align:right;">
+0.1142670
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-03-30
+</td>
+<td style="text-align:right;">
+-0.0189589
+</td>
+<td style="text-align:right;">
+0.0953082
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-04-30
+</td>
+<td style="text-align:right;">
+0.0782026
+</td>
+<td style="text-align:right;">
+0.1735108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-05-31
+</td>
+<td style="text-align:right;">
+-0.0066593
+</td>
+<td style="text-align:right;">
+0.1668515
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AAK.ST
+</td>
+<td style="text-align:left;">
+2012-06-29
+</td>
+<td style="text-align:right;">
+0.0520725
+</td>
+<td style="text-align:right;">
+0.2189239
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 
     

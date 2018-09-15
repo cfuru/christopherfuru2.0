@@ -51,8 +51,3 @@ googleAnalytics = ""
     url = "https://www.linkedin.com/in/christopher-furu-402b33a4/"
     name = "linkedin"
     weight = 3
-
-[[menu.icon]]
-    url = "https://www.instagram.com/christopherfuru/"
-    name = "instagram"
-    weight = 4

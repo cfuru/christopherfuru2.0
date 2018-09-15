@@ -6,10 +6,20 @@
     <description>Recent content in Projects on Christopher Furu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hardcore-banach-5d0897.netlify.com/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Modern portfolio theory</title>
+      <link>https://hardcore-banach-5d0897.netlify.com/project/modern-portfolio-theory/</link>
+      <pubDate>Sun, 09 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hardcore-banach-5d0897.netlify.com/project/modern-portfolio-theory/</guid>
+      <description>wohoo
+SELECT * FROM stockData.closePricesDateTickerClosePriceReturn2012-01-09AAK.ST31.6667-0.012982012-01-09ABB.ST134.4000-0.003712012-01-09AF-B.ST55.50000.004522012-01-09ALFA.ST132.0000-0.002272012-01-09ALIV-SDB.ST393.50000.029032012-01-09ASSA-B.</description>
+    </item>
     
     <item>
       <title>Scraping stock prices</title>
