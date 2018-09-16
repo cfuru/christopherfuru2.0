@@ -60,7 +60,7 @@ cnxn.close()
 ```
 
 ## Storing stock prices
-Using the same, ugly but workable, logic as before we can store the data by first checking if any combination of (**date, ticker**) exists, otherwise store the data. Further I have originally split up the dataset in chunks of 100's in order not the get any truble with the SQL-connection.
+Using the same, ugly but workable, logic as before we can store the data by first checking if any combination of (**date, ticker**) exists, otherwise store the data. Further I have originally split up the dataset in chunks of 100's, in order not the get any truble with the SQL-connection.
 ```{python, eval=FALSE, include = TRUE}
 cnxn, cursor = mssql_connect(server, database, username, password, driver)
 
