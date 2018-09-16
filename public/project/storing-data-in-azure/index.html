@@ -205,7 +205,7 @@ cnxn.close()</code></pre>
 </div>
 <div id="storing-stock-prices" class="section level2">
 <h2>Storing stock prices</h2>
-<p>Using the same, ugly but workable, logic as before we can store the data by first checking if any combination of (<strong>date, ticker</strong>) exists, otherwise store the data. Further I have originally split up the dataset in chunks of 100’s in order not the get any truble with the SQL-connection.</p>
+<p>Using the same, ugly but workable, logic as before we can store the data by first checking if any combination of (<strong>date, ticker</strong>) exists, otherwise store the data. Further I have originally split up the dataset in chunks of 100’s, in order not the get any truble with the SQL-connection.</p>
 <pre class="python"><code>cnxn, cursor = mssql_connect(server, database, username, password, driver)
 for chunks in np.array_split(ClosePrices, 100):
     data = chunks.values.tolist()
